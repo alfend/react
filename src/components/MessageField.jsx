@@ -23,7 +23,7 @@ export default class MessageField extends Component {
         timer: null,
         tick: 0,
         maxTick: 5,
-        text: 'Воу воу воу. Остановись! Хватит флудить',
+        text: 'Уже спам!',
       },
 	  
     };
@@ -31,7 +31,7 @@ export default class MessageField extends Component {
     this.chatWindow = React.createRef();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate = (prevProps, prevState) => {
     // eslint-disable-next-line react/destructuring-assignment
     if (prevState.messages.length < this.state.messages.length) {
       const { messages, overloadBot } = this.state;
@@ -50,7 +50,7 @@ export default class MessageField extends Component {
     }
   }
 
-  botSendMessage() {
+  botSendMessage = () => {
     const { overloadBot } = this.state;
     clearTimeout(overloadBot.timer);
     overloadBot.timer = setTimeout(() => {
@@ -59,7 +59,7 @@ export default class MessageField extends Component {
     }, 1000);
   }
 
-  sendMessage(text, sender) {
+  sendMessage = (text, sender) => {
     if (text.length > 0) {
       const { messages } = this.state;
       this.setState({
@@ -74,11 +74,11 @@ export default class MessageField extends Component {
     }
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({ textFieldValue: event.target.value });
   }
 
-  handleKeyUp(event) {
+  handleKeyUp = (event) => {
     if (event.keyCode === 13) {
       const { textFieldValue } = this.state;
       this.sendMessage(textFieldValue, 'me');
@@ -108,3 +108,5 @@ export default class MessageField extends Component {
     );
   }
 }
+
+
