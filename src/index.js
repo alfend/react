@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 import { Routes } from "./Routes";
-import { Parent } from "./components/Parent";
-import { store } from "./store";
+import { BrowserRouter } from 'react-router-dom';
+import { store, persistor } from "./store";
 
 ReactDOM.render(
   <Provider store={store}>
-    <Routes />
+    <PersistGate persistor={persistor} loading={null}>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );

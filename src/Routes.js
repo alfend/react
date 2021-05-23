@@ -1,60 +1,49 @@
-import React from "react";
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Link,
-  withRouter,
-} from "react-router-dom";
-import App from "./App";
+import React, { useState, useCallback } from "react";
+import { Switch, Link, Route } from "react-router-dom";
 import { ChatList } from "./components/ChatList";
-import { ConnectedProfile as Profile } from './components/Profile';
+import MessageField from "./components/MessageField";
+import { Profile } from "./components/Profile";
+import { Header } from "./components/Header";
+import { AUTHORS } from "./utils/constants";
+
+const initialChats = [
+  {
+    name: "Chat1",
+    id: "chat1",
+  },
+  {
+    name: "Chat2",
+    id: "chat2",
+  },
+  {
+    name: "Chat3",
+    id: "chat3",
+  },
+];
+
+const initialMessages = {
+  chat1: [
+    { author: AUTHORS.HUMAN, text: "hi1" },
+    { author: AUTHORS.BOT, text: "hi" },
+  ],
+  chat2: [
+    { author: AUTHORS.HUMAN, text: "hi2" },
+    { author: AUTHORS.HUMAN, text: "hi" },
+  ],
+  chat3: [],
+};
 
 export const Routes = () => {
   return (
-    <BrowserRouter>
-      <ul>
-        <li>
-          <Link to="/profile">Profile</Link>
-        </li>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-      </ul>
+      <Header />
 
       <Switch>
-        <Route path="/" exact>
-          <ChatList />
-        </Route>
-        <Route path="/chats/:chatId">
-          <App />
-        </Route>
-        <Route
-          path="/profile"
-          render={(obj) => <Profile routerProp={obj} />}
-          exact
-        />
+	  
+		<Route exact path="/"  /> <ChatList /> </Route>
+        <Route exact path="/profile" /> <Profile /> </Route>
+        <Route exact path="/chat/:chatId" /> <MessageField /> </Route>
+		<Route exact path="*" render={<div>This is my 404</div>} />
+	
       </Switch>
-    </BrowserRouter>
-  );
-};
-
-const Button = (props) => {
-  return <div style={{ border: "1px solid red" }}>{props.children}</div>;
-};
-
-export const Example = () => {
-  return (
-    <>
-      <Button>
-        <div>smth</div>
-      </Button>
-      <Button>
-        <span style={{ fontWeight: "bold" }}>Hello</span>
-        <span style={{ fontWeight: "bold" }}>Hello</span>
-        <span style={{ fontWeight: "bold" }}>Hello</span>
-      </Button>
-      <Button>simple text</Button>
-    </>
   );
 };
